@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: bancha.library
+---
+testFramework: kotlintest
+sourceLanguage: kotlin

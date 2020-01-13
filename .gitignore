@@ -253,3 +253,6 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/git,vim,macos,gradle,kotlin,webstorm+all,intellij+all
+
+db/data
+

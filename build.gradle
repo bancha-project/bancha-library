@@ -13,12 +13,14 @@ group "bancha.library"
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    maven { url 'https://dl.bintray.com/michaelbull/maven' }
 }
 
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
 }
+
 
 dependencies {
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
@@ -50,9 +52,9 @@ dependencies {
     kapt "org.mapstruct:mapstruct-processor:1.3.1.Final"
     api "com.github.pozo:mapstruct-kotlin:1.3.1.0"
     kapt "com.github.pozo:mapstruct-kotlin-processor:1.3.1.0"
-
+    // for etc
+    implementation "com.michael-bull.kotlin-result:kotlin-result:1.1.4"
 }
-
 test.classpath += configurations.developmentOnly
 
 mainClassName = "com.github.banchaproject.banchalibrary.Application"

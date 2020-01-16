@@ -1,6 +1,7 @@
 package com.github.banchaproject.banchalibrary.api.book
 
 import com.github.banchaproject.banchalibrary.domain.service.book.BookService
+import com.github.michaelbull.result.mapBoth
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
@@ -17,17 +18,23 @@ class BookController(
 ) {
 
     @Get
-    fun getBooks() = bookMapper.map(bookService.findAll())
+    fun getBooks(): HttpResponse<Iterable<BookResource>> = bookService.findAll()
+        .mapBoth(
+            success = { HttpResponse.ok(bookMapper.map(it)) },
+            failure = { HttpResponse.serverError() }
+        )
 
     @Get("{bookId}")
-    fun getBook(@PathVariable bookId: Long): HttpResponse<BookResource> {
-        val book = bookService.findOne(bookId)
-        return if (book.isPresent) {
-            HttpResponse.ok(bookMapper.map(book.get()))
-        } else {
-            HttpResponse.notFound()
-        }
-    }
+    fun getBook(@PathVariable bookId: Long): HttpResponse<BookResource> = bookService.findOne(bookId)
+        .mapBoth(
+            success = {
+                when {
+                    it.isPresent -> HttpResponse.ok(bookMapper.map(it.get()))
+                    else -> HttpResponse.notFound()
+                }
+            },
+            failure = { HttpResponse.serverError() }
+        )
 
     @Post
     fun postBook(@Body bookResource: BookResource): HttpResponse<BookResource> {

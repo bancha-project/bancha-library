@@ -37,9 +37,10 @@ class BookController(
         )
 
     @Post
-    fun postBook(@Body bookResource: BookResource): HttpResponse<BookResource> {
-        TODO("未実装")
-    }
+    fun postBook(@Body bookResource: BookResource): HttpResponse<BookResource> = bookService.save(bookMapper.map(bookResource)).mapBoth(
+        success = { HttpResponse.ok(bookMapper.map(it)) },
+        failure = { HttpResponse.serverError() }
+    )
 
     @Put("{bookId}")
     fun putBook(@PathVariable bookId: Long, @Body bookResource: BookResource): HttpResponse<BookResource> {

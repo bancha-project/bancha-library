@@ -8,4 +8,5 @@ import org.mapstruct.Mapper
 interface BookMapper {
     fun map(book: Book): BookResource
     fun map(books: Iterable<Book>): Iterable<BookResource>
+    fun map(bookResource: BookResource): Book
 }

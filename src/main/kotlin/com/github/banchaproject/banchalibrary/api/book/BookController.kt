@@ -43,9 +43,11 @@ class BookController(
     )
 
     @Put("{bookId}")
-    fun putBook(@PathVariable bookId: Long, @Body bookResource: BookResource): HttpResponse<BookResource> {
-        TODO("未実装")
-    }
+    fun putBook(@PathVariable bookId: Long, @Body bookResource: BookResource): HttpResponse<BookResource> =
+        bookService.update(bookMapper.map(bookResource.copy(bookId = bookId))).mapBoth(
+            success = { HttpResponse.ok(bookMapper.map(it)) },
+            failure = { HttpResponse.serverError() }
+        )
 
     @Delete("{bookId}")
     fun deleteBook(@PathVariable bookId: Long): HttpResponse<BookResource> {

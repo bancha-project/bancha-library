@@ -24,4 +24,18 @@ class BookServiceImpl(
             bookRepository.save(book)
         }
     }
+
+    override fun update(book: Book): Result<Book, Throwable> = runCatching {
+        txManager.executeWrite {
+            bookRepository.update(book.bookId, book.title, book.author, book.summary, book.isbn)
+            book
+        }
+    }
+
+    override fun deleteOne(bookId: Long): Result<Long, Throwable> = runCatching {
+        txManager.executeWrite {
+            bookRepository.deleteById(bookId)
+            bookId
+        }
+    }
 }

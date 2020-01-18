@@ -7,4 +7,7 @@ import java.util.*
 interface BookService {
     fun findAll(): Result<Iterable<Book>, Throwable>
     fun findOne(bookId: Long): Result<Optional<Book>, Throwable>
+    fun save(book: Book): Result<Book, Throwable>
+    fun update(book: Book): Result<Book, Throwable>
+    fun deleteOne(bookId: Long): Result<Long, Throwable>
 }

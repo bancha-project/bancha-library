@@ -50,7 +50,8 @@ class BookController(
         )
 
     @Delete("{bookId}")
-    fun deleteBook(@PathVariable bookId: Long): HttpResponse<BookResource> {
-        TODO("未実装")
-    }
+    fun deleteBook(@PathVariable bookId: Long): HttpResponse<BookResource> = bookService.deleteOne(bookId).mapBoth(
+        success = { HttpResponse.ok() },
+        failure = { HttpResponse.serverError() }
+    )
 }

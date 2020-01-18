@@ -31,4 +31,11 @@ class BookServiceImpl(
             book
         }
     }
+
+    override fun deleteOne(bookId: Long): Result<Long, Throwable> = runCatching {
+        txManager.executeWrite {
+            bookRepository.deleteById(bookId)
+            bookId
+        }
+    }
 }

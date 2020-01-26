@@ -5,12 +5,12 @@ import jsonServerProvider from 'ra-data-json-server';
 import BookIcon from '@material-ui/icons/ImportContacts';
 import Dashboard from './Dashboard';
 import authProvider from './sample/authProvider';
-import {BookList} from "./app/book";
+import {BookCreate, BookEdit, BookList} from "./app/book";
 
 const dataProvider = jsonServerProvider('http://localhost:8080');
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="books" list={BookList} icon={BookIcon}/>
+        <Resource name="books" list={BookList} icon={BookIcon} create={BookCreate} edit={BookEdit}/>
     </Admin>
 );
 export default App;

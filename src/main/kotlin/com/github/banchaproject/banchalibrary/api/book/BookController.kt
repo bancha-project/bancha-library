@@ -62,9 +62,8 @@ class BookController(
         )
 
     @Delete("{bookId}")
-    fun deleteBook(@PathVariable bookId: Long): HttpResponse<BookResource> = bookService.deleteOne(bookId).mapBoth(
-        // TODO JSON返さないとReact-Adminでエラーになる
-        success = { HttpResponse.ok() },
+    fun deleteBook(@PathVariable bookId: Long): HttpResponse<Long> = bookService.deleteOne(bookId).mapBoth(
+        success = { HttpResponse.ok(bookId) },
         failure = { HttpResponse.serverError() }
     )
 }

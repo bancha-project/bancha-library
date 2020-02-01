@@ -20,7 +20,7 @@ class BookController(
     @Get
     fun getBooks(): HttpResponse<Iterable<BookResource>> = bookService.findAll()
         .mapBoth(
-            success = { HttpResponse.ok(bookMapper.map(it)) },
+            success = { HttpResponse.ok(bookMapper.map(it)).header("X-Total-Count", "${it.count()}") },
             failure = { HttpResponse.serverError() }
         )
 
@@ -44,13 +44,14 @@ class BookController(
 
     @Put("{bookId}")
     fun putBook(@PathVariable bookId: Long, @Body bookResource: BookResource): HttpResponse<BookResource> =
-        bookService.update(bookMapper.map(bookResource.copy(bookId = bookId))).mapBoth(
+        bookService.update(bookMapper.map(bookResource.copy(id = bookId))).mapBoth(
             success = { HttpResponse.ok(bookMapper.map(it)) },
             failure = { HttpResponse.serverError() }
         )
 
     @Delete("{bookId}")
     fun deleteBook(@PathVariable bookId: Long): HttpResponse<BookResource> = bookService.deleteOne(bookId).mapBoth(
+        // TODO JSON返さないとReact-Adminでエラーになる
         success = { HttpResponse.ok() },
         failure = { HttpResponse.serverError() }
     )

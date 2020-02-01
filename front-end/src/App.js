@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import authProvider from './sample/authProvider';
 import {BookCreate, BookEdit, BookList} from "./app/book";
 
-const dataProvider = jsonServerProvider('http://localhost:8080');
+const dataProvider = jsonServerProvider(process.env.REACT_APP_API_URL);
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
         <Resource name="books" list={BookList} icon={BookIcon} create={BookCreate} edit={BookEdit}/>

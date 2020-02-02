@@ -4,7 +4,7 @@ import com.github.pozo.KotlinBuilder
 
 @KotlinBuilder
 data class BookResource(
-    val bookId: Long?,
+    val id: Long?,
     val title: String,
     val author: String,
     val summary: String,

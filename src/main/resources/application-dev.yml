@@ -1,0 +1,9 @@
+# ローカル環境ではcorsを有効にする
+micronaut:
+  server:
+    cors:
+      enabled: true
+      configurations:
+        web:
+          exposedHeaders:
+            - X-Total-Count

@@ -10,3 +10,16 @@ services:
     volumes:
       - ./db/data:/var/lib/postgresql/data
       - ./db/sql:/docker-entrypoint-initdb.d
+  local-data-api:
+    image: koxudaxi/local-data-api
+    restart: always
+    environment:
+      ENGINE: PostgreSQLJDBC
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      RESOURCE_ARN: 'arn:aws:rds:us-east-1:123456789012:cluster:dummy'
+      SECRET_ARN: 'arn:aws:secretsmanager:us-east-1:123456789012:secret:dummy'
+    ports:
+      - "8080:80"
